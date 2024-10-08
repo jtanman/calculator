@@ -1,13 +1,15 @@
 h1 {
     text-align: center;
-  }
+}
 
 .container {
     display: flex;
-    flex: 1 1 auto; /* Allow the container to grow both vertically and horizontally */
-    max-width: 960px;
-    height: 80vh;
-    margin: 0 auto; /* Center the container horizontally */
+    flex: 1 1 auto;
+    /* Allow the container to grow both vertically and horizontally */
+    width: 600px;
+    height: 600px;
+    margin: 0 auto;
+    /* Center the container horizontally */
 }
 
 .calculator {
@@ -15,8 +17,7 @@ h1 {
     flex-direction: column;
     margin: 0 auto;
     border: 5px solid black;
-    flex: 1 1;
-  }
+}
 
 .display {
     background-color: #222;
@@ -29,26 +30,29 @@ h1 {
     max-width: 960px;
     overflow: hidden;
     display: flex;
-    align-items: center; /* Center the text vertically */
-    justify-content: flex-end; /* Align the text to the right */
+    align-items: center;
+    /* Center the text vertically */
+    justify-content: flex-end;
+    /* Align the text to the right */
 }
 
 .button-box {
     display: flex;
     flex-wrap: wrap;
     flex: 1 1;
-    min-height: 200px;
 }
 
 .button-box button {
-    flex: 1 1 25%; /* Flex-grow: 1, Flex-shrink: 1, Flex-basis: 25% */
-    box-sizing: border-box; /* Ensure padding and border are included in the button's width */
+    flex: 1 1 25%;
+    /* Flex-grow: 1, Flex-shrink: 1, Flex-basis: 25% */
+    box-sizing: border-box;
+    /* Ensure padding and border are included in the button's width */
 }
 
 button {
     background-color: #333;
     color: #fff;
-    font-size: 1.5em;
+    font-size: 2em;
     border: 1px solid #444;
     border-radius: 5px;
     cursor: pointer;
@@ -56,12 +60,14 @@ button {
     min-height: 50px;
 }
 
+button:focus {
+     outline: none; /* Removes the outline when focused */
+}
+
 .top-row-button {
     background-color: hsl(0, 0%, 50%);
-    color: #fff;
 }
 
 .right-row-button {
     background-color: orange;
-    color: #fff;
 }
