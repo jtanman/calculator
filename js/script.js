@@ -14,6 +14,8 @@ function multiply(a, b) {
 
 function divide(a, b) {
     if (b === 0) {
+        const display = document.querySelector('.display');
+        display.textContent = 'Error: divide by 0';
         throw new Error("Cannot divide by zero");
     }
     return a / b;
@@ -40,6 +42,12 @@ function createButtons() {
         button.textContent = buttonText;
         button.classList.add('button');
         buttonBox.appendChild(button);
+
+        button.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && document.activeElement === button) {
+            e.preventDefault(); // Prevent default action of Enter key
+            }
+        });
     });
 
     const topRowButtons = ['AC', '+/-', '%',];
@@ -82,6 +90,7 @@ function addButtonListeners(buttonBox) {
 
     buttonBox.childNodes.forEach(button => {
         button.addEventListener('click', () => {
+
             const display = document.querySelector('.display');
             let buttonText = button.textContent;
 
@@ -91,8 +100,16 @@ function addButtonListeners(buttonBox) {
                 display.textContent = '';
                 currentValue = '';
             } else if (buttonText === '←') {
+                if (newState) {
+                    display.textContent = '';
+                    newState = false;
+                }
                 display.textContent = display.textContent.slice(0, -1);
             } else if (buttonText === '.') {
+                if (newState) {
+                    display.textContent = '';
+                    newState = false;
+                }
                 if (!display.textContent.includes('.')) {
                     display.textContent += '.';
                 }
@@ -103,7 +120,7 @@ function addButtonListeners(buttonBox) {
                     display.textContent = '-' + display.textContent;
                 }
             } else if (buttonText === '%') {
-                display.textContent = (parseFloat(display.textContent) / 100).toString();
+                display.textContent = parseFloat(((display.textContent) / 100).toFixed(10)).toString();
             } else if (['/', '*', '+', '-'].includes(buttonText)) {
                 currentValue = parseFloat(display.textContent);
                 operator = buttonText;
@@ -111,8 +128,12 @@ function addButtonListeners(buttonBox) {
             } else if (buttonText === '=') {
                 const secondValue = parseFloat(display.textContent);
                 if (operator) {
-                    display.textContent = operate(currentValue, secondValue, operator);
-                    currentValue = parseFloat(display.textContent);
+                    try {
+                        currentValue = operate(currentValue, secondValue, operator);
+                        display.textContent = parseFloat(currentValue.toFixed(10));
+                    } catch (e) {
+                        console.log(e);
+                    }                    
                     newState = true;
                     operator = '';
                 }
@@ -130,7 +151,7 @@ function addButtonListeners(buttonBox) {
 function addKeyboardListeners() {
     document.addEventListener('keydown', (e) => {
         const display = document.querySelector('.display');
-        let key = e.key;        
+        let key = e.key;
 
         const keyMap = {
             'Enter': '=',
